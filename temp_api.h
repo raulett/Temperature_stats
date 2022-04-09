@@ -2,6 +2,7 @@
 #define TEMP_API_H
 
 #include <stdint.h>
+#include <inttypes.h>
 #include "temp_struct.h"
 
 

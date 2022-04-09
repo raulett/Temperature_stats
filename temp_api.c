@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <inttypes.h>
 #include "temp_api.h"
 #include "temp_struct.h"
 
