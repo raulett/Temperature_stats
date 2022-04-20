@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 
-uint32_t read_temperature_file(FILE*, tmp_list*);
+uint32_t read_temperature_file(FILE*, tmp_list**);
 int readline(FILE*, temperature*);
 
 #endif

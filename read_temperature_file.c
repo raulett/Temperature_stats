@@ -7,15 +7,18 @@
 #define READ_FILE_DEBUG 0
 #define READLINE_DEBUG 0
 #define READ_DEBUG 0
-#define ADDR_DEBUG 1
+#define ADDR_DEBUG 0
+#define ADDR_DEBUG_FINAL 0
 
-uint32_t read_temperature_file(FILE *file, tmp_list *t_list)
+uint32_t read_temperature_file(FILE *file, tmp_list **in_list)
 {
     if (READ_FILE_DEBUG) printf("read_file_temperature function in\n");
     temperature *t_record_ptr;
     t_record_ptr = malloc(sizeof(temperature));
     int rline_res;
-    uint16_t counter = 0;
+    uint32_t counter = 0;
+    tmp_list *t_list;
+    t_list = malloc(sizeof(tmp_list));
     while ((rline_res = readline(file, t_record_ptr)) > -1)
     {
         if (READ_FILE_DEBUG) printf("current readline result if %d\n", rline_res);
@@ -45,18 +48,22 @@ uint32_t read_temperature_file(FILE *file, tmp_list *t_list)
     if (rline_res == -2)
     {
         push_temperature(&t_list, *t_record_ptr);
+        counter++;
     }
+    // printf ("Read_temperature_file load %d records\n", counter);
+    *in_list = t_list;
 
 
-
-    if (ADDR_DEBUG)
+    if (ADDR_DEBUG_FINAL)
     {
-        while(is_list_empty(t_list) != 1){
-            if (ADDR_DEBUG) printf("POP befofre POP call current counter is: %d, current t_list is %p\n", counter, t_list);
-            temperature t_record = pop(&t_list);
-            if (ADDR_DEBUG) printf("POP after POP call current counter is: %d, current t_list is %p\n", counter, t_list);
-            if (ADDR_DEBUG) printf("call is_list_empty %d\n", is_list_empty(t_list));
-            if (ADDR_DEBUG) printf("year " "%" PRIu16 ", mon " "%" PRIu8 ", day " "%" PRIu8 ", hour " "%" PRIu8 ", min " "%" PRIu8 ", temperature " "%" PRId8 "\n", t_record.year, t_record.mon, t_record.day, t_record.hour, t_record.min, t_record.temperature);
+        tmp_list *current_list; 
+        current_list = *in_list;
+        while(is_list_empty(current_list) != 1){
+            if (ADDR_DEBUG_FINAL) printf("look befofre call current counter is: %d, current t_list is %p\n", counter, current_list);
+            if (ADDR_DEBUG_FINAL) printf("call is_list_empty %d\n", is_list_empty(t_list));
+            if (ADDR_DEBUG_FINAL) printf("year " "%" PRIu16 ", mon " "%" PRIu8 ", day " "%" PRIu8 ", hour " "%" PRIu8 ", min " "%" PRIu8 ", temperature " "%" PRId8 "\n", (current_list->data).year, (current_list->data).mon, (current_list->data).day, (current_list->data).hour, (current_list->data).min, (current_list->data).temperature);
+            current_list = current_list->next;
+            if (ADDR_DEBUG_FINAL) printf("look after call current counter is: %d, current t_list is %p\n", counter, current_list);
         }
     }
 
@@ -108,6 +115,10 @@ int readline(FILE *f, temperature *t_record_ptr)
         else if ((c >= '0') && (c <= '9'))
         {
             current_digit = current_digit*10 + (c - '0');
+        }
+        else if (c == ' ')
+        {
+            continue;
         }
         else
         {

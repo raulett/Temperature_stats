@@ -22,17 +22,4 @@ void  push_temperature(tmp_list**, temperature);
 _Bool is_list_empty(tmp_list*);
 temperature pop(tmp_list**);
 
-
-
-
-// typedef struct intlist
-// {
-//     int digit;
-//     struct intlist *next;
-// } test_list;
-
-// void push_test(test_list **t_list, int digit);
-// int pop_test(test_list **t_list);
-// _Bool test_is_list_empty(test_list *t_list);
-
 #endif
