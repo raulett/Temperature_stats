@@ -7,11 +7,9 @@
 
 
 int compare_datetime(const void *, const void *);
-int8_t average_mon_temp(struct temp_arr, uint8_t, uint16_t);
-int8_t min_mon_temp(struct temp_arr, uint8_t, uint16_t);
-int8_t max_mon_temp(struct temp_arr, uint8_t, uint16_t);
-int8_t average_year_temp(struct temp_arr, uint16_t);
-int8_t min_year_temp(struct temp_arr, uint16_t);
-int8_t max_year_temp(struct temp_arr, uint16_t);
+int8_t average_temp(tmp_list *);
+int8_t min_temp(tmp_list *);
+int8_t max_temp(tmp_list *);
+uint32_t select_period(tmp_list *);
 
 #endif

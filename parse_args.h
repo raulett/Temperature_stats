@@ -13,9 +13,9 @@ typedef struct parsed_args{
     uint16_t year_parsed;
     uint8_t month_parsed_flag:1;
     uint8_t month_parsed;
-};
+} parsed_args;
 
-struct parsed_args get_arguments_parsed(int, char**);
+parsed_args get_arguments_parsed(int, char**);
 int parse_pos_int(char*);
 
 #endif
